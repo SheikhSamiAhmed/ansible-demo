@@ -1,0 +1,23 @@
+---
+
+- hosts :
+    - all
+  become: true
+  become_user: root
+  become_method: su
+  gather_facts: false
+
+  vars:
+    Your_Name1: Sheikh Sami Ahmed
+    YOUR_NAME2: Salman Arif
+    YOUR_NAME3: Sufiyan
+
+
+  tasks:
+
+    - name: Add text "This is first file made by Your Name in test1.txt"
+      ansible.builtin.lineinfile:
+        path: /root/TEST/test01.txt
+        line: "This is first file made by {{ Your_Name1 }}"
+      delegate_to: localhost
+      

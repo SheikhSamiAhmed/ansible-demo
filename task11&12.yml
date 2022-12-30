@@ -1,0 +1,29 @@
+
+---
+
+- hosts :
+    - all
+  become: true
+  become_user: root
+  become_method: su
+  gather_facts: false
+
+
+  tasks:
+
+    - name: Make ssh connection remote host
+      shell: >
+        sshpass -p {{ansible_password}} ssh -o "StrictHostKeyChecking no" {{ansible_user}}@{{ansible_host}}
+      delegate_to: localhost
+      become: false  
+
+    - name: Copy the zip to host machine.    
+      become: true
+      become_user: root
+      copy:
+        src: /root/allfiles.tar.bz2
+        dest: /root/
+
+    - name : Print message zip file copy to host machine
+      debug:
+        msg : Zip file copied to host machine

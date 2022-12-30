@@ -1,0 +1,15 @@
+---
+- hosts :
+    - all
+  become: true     #set to yes to activate privilege escalation
+  become_user: root
+  become_method: su
+
+  vars:
+    count: 0
+
+  tasks:
+  
+    - name: Declare an integer variable named "count" with value 0.
+      debug:
+        msg: "{{ count }}"

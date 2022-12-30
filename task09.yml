@@ -1,0 +1,28 @@
+
+---
+
+- hosts :
+    - all
+  become: true
+  become_user: root
+  become_method: su
+  gather_facts: false
+
+  tasks:
+
+    - name: Calculate checksum of test3.txt using SHA256 and add the checksum in checksums.txt.
+      stat:
+        path: /root/TEST/test03.txt
+        checksum_algorithm: sha256
+        get_checksum: yes
+      register: cksum_f3
+      delegate_to: localhost
+      become: false
+
+     
+    - name: add the calculated  checksum in checksums.txt
+      ansible.builtin.lineinfile:
+        path: /root/TEST/checksums.txt
+        line: "{{ cksum_f3.stat.checksum  }}  {{ cksum_f3.stat.path }} "
+      delegate_to: localhost
+      become: false

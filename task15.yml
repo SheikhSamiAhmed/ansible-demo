@@ -1,0 +1,25 @@
+---
+
+- hosts :
+    - all
+  become: true
+  become_user: root
+  become_method: su
+  gather_facts: false
+
+  tasks:
+
+    - name: Make ssh connection remote host
+      shell: >
+        sshpass -p {{ansible_password}} ssh -o "StrictHostKeyChecking no" {{ansible_user}}@{{ansible_host}}
+      delegate_to: localhost
+      become: false  
+
+
+    - name:  Create a copy of name CopyFolder of the current folder outside the current folder path. 
+      become: true
+      become_user: root
+      copy:
+        src: /root/TEST/
+        dest: /root/TEST_CopyFolder
+        remote_src: yes

@@ -1,0 +1,7 @@
+all:
+  hosts:
+    user:
+      ansible_host: 172.31.92.170
+      ansible_user: root
+      ansible_password: tpstps
+      ansible_connection: ssh
